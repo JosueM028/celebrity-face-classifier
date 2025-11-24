@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Clasificador de Celebridades</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0f172a;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #1e293b;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            text-align: center;
+            width: 400px;
+        }
+        h1 { color: #38bdf8; margin-bottom: 1rem; }
+        .upload-box {
+            border: 2px dashed #475569;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        button {
+            background: #38bdf8;
+            color: #0f172a;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover { background: #0ea5e9; }
+        
+        /* Estilos base para el resultado */
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            animation: fadeIn 0.5s;
+        }
+
+        /* Clase para predicción segura (Verde) */
+        .result-success {
+            background-color: #064e3b;
+            border: 1px solid #059669;
+        }
+
+        /* Clase para predicción dudosa (Rojo) */
+        .result-warning {
+            background-color: #7f1d1d;
+            border: 1px solid #b91c1c;
+        }
+
+        .result img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-top: 10px;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 IA Reconocimiento Facial</h1>
+        <p>Sube una foto de: Denzel, Hugh, Jennifer, Megan, Natalie o Scarlett</p>
+
+        <form action="/" method="post" enctype="multipart/form-data">
+            <div class="upload-box">
+                <input type="file" name="my_image" accept="image/*" required>
+            </div>
+            <button type="submit">Analizar Rostro</button>
+        </form>
+
+        {% if prediction %}
+        <div class="result {% if confidence_val > 75 %}result-success{% else %}result-warning{% endif %}">
+            
+            {% if confidence_val > 75 %}
+                <h3>✅ Resultado: <span style="color: #4ade80">{{ prediction }}</span></h3>
+            {% else %}
+                <h3>⚠️ Posiblemente: <span style="color: #fca5a5">{{ prediction }}</span></h3>
+                <p style="font-size: 0.9em; color: #cbd5e1; margin: 5px 0;">(No estoy muy segura...)</p>
+            {% endif %}
+            
+            <p>Seguridad: <strong>{{ confidence }}</strong></p>
+            <img src="{{ img_path }}" alt="Imagen analizada">
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
