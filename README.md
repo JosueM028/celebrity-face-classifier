@@ -1,26 +1,30 @@
-# celebrity-face-classifier
+# 🎭 Sistema de Clasificación Facial de Celebridades
 
-# Clasificación de Rostros: Portman vs Johansson
+Este repositorio contiene un proyecto integral de visión por computadora desarrollado con **TensorFlow y Python puro**. El sistema es capaz de realizar reconocimiento facial tanto binario como multiclase, implementando arquitecturas de redes neuronales convolucionales (CNN) desde cero.
 
-Este proyecto realiza un análisis de datos y clasificación binaria de imágenes faciales utilizando **TensorFlow y Python puro**. 
+> ⚠️ **Restricción Técnica:** Por requisitos estrictos del proyecto, **NO se utiliza Scikit-Learn (sklearn)** en ninguna etapa. Toda la división de datos, preprocesamiento, aumento de datos y cálculo de métricas (incluyendo matrices de confusión) se implementó manualmente o utilizando utilidades nativas de TensorFlow/Keras.
 
-> **Nota:** Por requisitos del proyecto, no se utiliza la librería Scikit-Learn (sklearn) para ninguna etapa del proceso (split, preprocesamiento ni métricas).
+## 🚀 Características del Proyecto
 
-## 📂 Dataset
-Los datos provienen del [Celebrity Face Image Dataset](https://www.kaggle.com/datasets/vishesh1412/celebrity-face-image-dataset/data).
-Se ha filtrado el dataset para analizar únicamente dos clases:
-- Natalie Portman
-- Scarlett Johansson
+El proyecto se divide en tres módulos principales:
 
-## 🚀 Tecnologías Utilizadas
-- **Python 3.x**
-- **TensorFlow / Keras**: Para la construcción de la CNN y el pipeline de datos (`tf.data`).
-- **OpenCV & NumPy**: Para el análisis estadístico manual y procesamiento de imágenes.
-- **Matplotlib**: Para la visualización de datos.
+### 1. Clasificación Binaria (Custom CNN)
+* **Objetivo:** Distinguir entre Natalie Portman y Scarlett Johansson.
+* **Modelo:** Arquitectura CNN personalizada ligera.
+* **Técnicas:** Limpieza de datos corruptos con OpenCV, Data Augmentation, y manejo de desbalance de clases mediante `class_weights`.
 
-## 📊 Análisis Realizado
-1. **Exploración:** Distribución de clases, resoluciones y detección de imágenes corruptas.
-2. **Estadística:** Cálculo manual de media y desviación estándar RGB.
-3. **Limpieza:** Eliminación de archivos vacíos o formatos no válidos.
-4. **Preprocesamiento:** Redimensionamiento, normalización y Data Augmentation sin librerías externas de ML.
+### 2. Clasificación Multiclase (VGG16 desde cero)
+* **Objetivo:** Clasificar rostros de 6 celebridades:
+    * Denzel Washington
+    * Hugh Jackman
+    * Jennifer Lawrence
+    * Megan Fox
+    * Natalie Portman
+    * Scarlett Johansson
+* **Modelo:** Implementación manual de la arquitectura **VGG16** (sin Transfer Learning), optimizada con **Batch Normalization** para evitar el colapso de modo.
+* **Evaluación:** Matriz de confusión multiclase generada con `tf.math.confusion_matrix`.
+
+### 3. Aplicación Web (Deployment)
+* Interfaz web construida con **Flask**.
+* Permite a los usuarios subir una imagen y obtener una predicción en tiempo real utilizando el modelo entrenado.
 
